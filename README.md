@@ -30,12 +30,26 @@ public key: {Nb}PK(B).  In this example, there is an intruder (not
 shown) that can intercept messages (aka "man-in-the-middle") and spoof
 the initiator or responder.
 
-A flaw is the protocol first identified by
-[Lowe](http://web.comlab.ox.ac.uk/oucl/work/gavin.lowe/Security/Papers/NSPKP.ps)
-is found automatically.  Indeed, 23 variants are found automatically
-due to random interleavings of the different processes.  For example, 
-
 ![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram01.txt?cache=no)
+
+The sequence diagram above illustrates a flaw found automatically by
+SPIN in the protocol.  This flaw was first identified by
+[Lowe](http://web.comlab.ox.ac.uk/oucl/work/gavin.lowe/Security/Papers/NSPKP.ps).
+Indeed, 23 variants are found automatically due to random
+interleavings of the different processes.  In this trace (called a
+"trail" in SPIN), the Linear Temporal Logic (LTL) property:
+
+<center>ltl ltl_1 { [] ( ([] !ResCommitAB) || (!ResCommitAB U IniRunningAB) ) }</center>
+
+is violated in this sequence.  This LTL clause can be interpreted as
+*it is always the case in any trace that EITHER the responder will
+always NOT commit ([]!ResCommitAB) OR the responder will not commit
+(!ResCommitAB) UNTIL AFTER the initiator runs* (IniRunningAB).  The
+violation occurs in this trace because the initiator is running
+(IniRunningAB) but the responder never commits (ResCommitAB) in *ANY*
+future.  The 2nd part of the LTL clause is powerful because it says
+that the responder must eventually become true UNTIL AFTER (U) the
+initiator runs (which is set after it sends its message).
 
 ## Installation
 
@@ -45,7 +59,7 @@ due to random interleavings of the different processes.  For example,
 
 3. Change into the needham_shroeder_spin directory
 
-4. Search for errors using the first Linear Temporal Logic Formula (ltl_0).  There should be no errors:
+4. Search for errors using the first Linear Temporal Logic (LTL) Formula (ltl_0).  There should be no errors:
 
 ````
 % spin -search -ltl ltl_0 ns1.pml
