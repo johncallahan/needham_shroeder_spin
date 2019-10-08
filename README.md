@@ -35,7 +35,7 @@ A flaw is the protocol first identified by
 is found automatically.  Indeed, 23 variants are found automatically
 due to random interleavings of the different processes.  For example, 
 
-![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram01.txt)
+![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram01.txt?cache=no)
 
 ## Installation
 
