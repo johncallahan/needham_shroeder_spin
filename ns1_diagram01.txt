@@ -1,3 +1,6 @@
 @startuml
-Bob -> Alice : hello
+A -> I : {Na,A}PK(B)
+I -> B : {B,A}PK{B}
+note over B: InitRunningAB is true
+B -> I : {B,Nb}PK(A)
 @enduml
