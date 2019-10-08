@@ -52,10 +52,12 @@ proctype PIni(mtype self; mtype party; mtype nonce)
 The initiator (PIni shown above and instantiated as "A") is run (see
 the init section in the ns1.pml file) with self assigned "A", party
 assigned "B" or "I" and the nonce assigned "Na".  After setting
-InitRunningAB to true, the initiator (A) non-deterministically sends
-(!) a message to either B or the Intruder (I) to represent an
-intercepted message.  The initiator (A) then waits to receive a
-message (?).
+InitRunningAB to true (note: IniRunning is a macro), the initiator (A)
+non-deterministically sends a message on a channel ("ca !" means "send
+a message on the ca channel") to either B or the Intruder (I) to
+represent an intercepted message.  The initiator (A) then waits on a
+channel to receive a message ("ca ?"  means "wait to receive a message
+on the ca channel").
 
 ````
 proctype PRes(mtype self; mtype nonce)
@@ -74,11 +76,12 @@ proctype PRes(mtype self; mtype nonce)
 }
 ````
 
-The responder (PRes shown above and instantiated as "B") waits to
-receive (?) a message from either A or the Intruder.  When it receives
-a message, it sets its state to ResRunningAB = true and then replies
-(!) with a message to the sender.  The responder (B) then waits (?) to
-receive a commit message (from A or the Intruder).
+The responder (PRes shown above and instantiated as "B") first waits
+to receive (ca ?) a message from either A or the Intruder pretending
+to be A.  When it receives a message, it sets its state to
+ResRunningAB = true (using the ResRunning macro) and then replies by
+sending a message (ca !)  back to the same sender.  The responder (B)
+then waits (?) to receive a commit message (from A or the Intruder).
 
 ![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram00.txt?cache=no)
 
