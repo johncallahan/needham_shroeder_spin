@@ -30,11 +30,60 @@ public key: {Nb}PK(B).  In this example, there is an intruder (not
 shown) that can intercept messages (aka "man-in-the-middle") and spoof
 the initiator or responder.
 
+````
+proctype PIni(mtype self; mtype party; mtype nonce)
+{
+	mtype g1;
+
+	atomic {
+	       IniRunning(self,party);
+	       ca ! self, nonce, self, party;
+	       }
+
+	atomic {
+	       ca ? eval(self), eval(nonce), g1, eval(self);
+	       IniCommit(self,party);
+
+	       cb ! self, g1, party;
+	}
+}
+````
+
+The initiator (PIni shown above) is run (see the init section in the
+ns1.pml file) with self assigned "A", party assigned "B" or "I" and
+the nonce assigned "Na".  After setting InitRunningAB to true, the
+initiator (A) non-deterministically sends (!) a message to either B or the
+Intruder (I) to represent an intercepted message.  The initiator (A)
+then waits to receive a message (?).
+
+````
+proctype PRes(mtype self; mtype nonce)
+{
+	mtype g2, g3;
+
+	atomic {
+	       ca ? eval(self), g2, g3, eval(self);
+	       ResRunning(g3,self);
+	       ca ! self, g2, nonce, g3;
+	}
+	atomic {
+	       cb ? eval(self), eval(nonce), eval(self);
+	       ResCommit(g3,self);
+	}
+}
+````
+
+The responder (B) waits to receive (?) a message from either A or the
+Intruder.  When it receives a message, it sets its state to
+ResRunningAB = true and then replies (!) with a message to the sender.
+The responder (B) then waits (?) to receive a commit message (from A
+or the Intruder).
+
 ![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram01.txt?cache=no)
 
-The sequence diagram above illustrates a flaw found automatically by
-SPIN in the protocol.  This flaw was first identified by
-[Lowe](http://web.comlab.ox.ac.uk/oucl/work/gavin.lowe/Security/Papers/NSPKP.ps).
+The sequence diagram above illustrates one possible trace in which a
+flaw found automatically by SPIN in the protocol.  This flaw was first
+identified by [Lowe](http://web.comlab.ox.ac.uk/oucl/work/gavin.lowe/Security/Papers/NSPKP.ps).
 Indeed, 23 variants are found automatically due to random
 interleavings of the different processes.  In this trace (called a
 "trail" in SPIN), the Linear Temporal Logic (LTL) property:
