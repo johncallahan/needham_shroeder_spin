@@ -89,7 +89,9 @@ Indeed, 23 variants are found automatically due to random
 interleavings of the different processes.  In this trace (called a
 "trail" in SPIN), the Linear Temporal Logic (LTL) property:
 
-<center>ltl ltl_1 { [] ( ([] !ResCommitAB) || (!ResCommitAB U IniRunningAB) ) }</center>
+````
+ltl ltl_1 { [] ( ([] !ResCommitAB) || (!ResCommitAB U IniRunningAB) ) }
+````
 
 is violated in this sequence.  This LTL clause can be interpreted as
 *it is always the case in any trace that EITHER the responder will
