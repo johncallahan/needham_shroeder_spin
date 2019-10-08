@@ -146,5 +146,5 @@ init {
      }
 }
 
-ltl { [] ( ([] !IniCommitAB) || (!IniCommitAB U ResRunningAB) ) }
-ltl { [] ( ([] !ResCommitAB) || (!ResCommitAB U IniRunningAB) ) }
+ltl ltl_0 { [] ( ([] !IniCommitAB) || (!IniCommitAB U ResRunningAB) ) }
+ltl ltl_1 { [] ( ([] !ResCommitAB) || (!ResCommitAB U IniRunningAB) ) }
