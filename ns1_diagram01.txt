@@ -1,9 +1,9 @@
 @startuml
 A -> Intruder : {Na,A}PK(B)
 note over A: IniRunningAB is true
-note over I: message from A discarded
+note over Intruder: message from A discarded
 Intruder -> B : {B,A}PK{B}
 B -> Intruder : {B,Nb}PK(A)
 note over B: ResRunningAB is true
-note over I: message from B discarded
+note over Intruder: message from B discarded
 @enduml
