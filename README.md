@@ -80,7 +80,7 @@ a message, it sets its state to ResRunningAB = true and then replies
 (!) with a message to the sender.  The responder (B) then waits (?) to
 receive a commit message (from A or the Intruder).
 
-![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram01.txt?cache=no)
+![cached image](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/johncallahan/needham_shroeder_spin/master/ns1_diagram00.txt?cache=no)
 
 The sequence diagram above illustrates one possible trace in which a
 flaw found automatically by SPIN in the protocol.  This flaw was first
