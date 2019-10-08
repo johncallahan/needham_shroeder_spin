@@ -106,7 +106,7 @@ future.  The 2nd part of the LTL clause is powerful because it says
 that the responder must eventually become true UNTIL AFTER (U) the
 initiator runs (which is set after it sends its message).
 
-## Installation
+## Install and Run
 
 1. [Download, build and install SPIN on your machine](http://spinroot.com/spin/Man/README.html)
 
